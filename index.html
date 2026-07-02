@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>NAVIONE — Digital ERP for Modern Construction</title>
+<meta name="description" content="NAVIONE — a construction-focused ERP platform to centralize projects, sites, suppliers, finance, HR and equipment."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Urbanist:wght@600;700;800;900&display=swap" rel="stylesheet"/>
+<!-- View (styles) — MVC: presentation layer, no logic -->
+<link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     View layer (MVC) — pure markup, no business logic.
+     Content is bilingual via data-en/data-fr attributes; the
+     LanguageController (js/controllers/LanguageController.js)
+     swaps them at runtime. Interactive widgets below are inert
+     until their matching controller in js/controllers/ runs.
+═══════════════════════════════════════════════════════ -->
+
+<!-- Preloader — hidden by PreloaderController once window 'load' fires -->
+<div id="preloader"><div class="mark"><span>NAVI</span><span>ONE</span></div></div>
+<div id="cursorGlow"></div>
+<div id="langTransition"></div>
+<div id="langCenterMark">
+  <span class="lcm-ring"></span>
+  <span class="lcm-ring r2"></span>
+  <img class="lcm-logo" id="lcmLogo" src="assets/logo-navione-dark-transparent.png" alt="NAVIONE"/>
+  <span class="lcm-sub" id="lcmSub">Français</span>
+</div>
+
+<!-- Contact modal — opened/closed by ModalController via .contact-trigger elements -->
+<div class="contact-modal" id="contactModal" aria-hidden="true">
+  <div class="cm-backdrop" id="contactModalBackdrop"></div>
+  <div class="cm-card" role="dialog" aria-modal="true" aria-label="Contact NAVIONE">
+    <button class="cm-close" id="contactModalClose" aria-label="Close">✕</button>
+    <div class="cm-glow"></div>
+    <div class="cm-eyebrow" data-en="Get in touch" data-fr="Contactez-nous">Get in touch</div>
+    <h3 data-en="Contact" data-fr="Contact">Contact</h3>
+    <div class="cm-rows">
+      <div class="cm-row" style="--d:0">
+        <span class="cm-icon">📍</span>
+        <div><strong data-en="Address" data-fr="Adresse">Address</strong><span>400 Site Ave, Suite 12</span></div>
+      </div>
+      <div class="cm-row" style="--d:1">
+        <span class="cm-icon">📞</span>
+        <div><strong data-en="Phone" data-fr="Téléphone">Phone</strong><a href="tel:+15550102244">+1 555 010 2244</a></div>
+      </div>
+      <div class="cm-row" style="--d:2">
+        <span class="cm-icon">✉️</span>
+        <div><strong data-en="Email" data-fr="E-mail">Email</strong><a href="mailto:hello@navione.io">hello@navione.io</a></div>
+      </div>
+    </div>
+    <a href="mailto:hello@navione.io" class="btn btn-primary cm-cta" data-en="Send us a message →" data-fr="Envoyez-nous un message →">Send us a message →</a>
+  </div>
+</div>
+<div id="scrollProgress"></div>
+
+<!-- Site header — "scrolled" state toggled by ScrollController -->
+<header class="site-header" id="siteHeader">
+  <div class="container nav-wrap">
+    <a href="#home" class="logo"><img src="assets/logo-navione-dark-transparent.png" alt="NAVIONE"/></a>
+    <nav class="h-nav">
+      <a href="#home" data-en="Home" data-fr="Accueil">Home</a>
+      <a href="#about" data-en="About" data-fr="À propos">About</a>
+      <a href="#solutions" data-en="Solutions" data-fr="Solutions">Solutions</a>
+      <a href="#services" data-en="Services" data-fr="Services">Services</a>
+      <a href="#blog" data-en="Insights" data-fr="Actualités">Insights</a>
+    </nav>
+    <div class="header-actions">
+      <button class="lang-toggle" id="langToggle" aria-label="Switch language">
+        <span class="lt-opt active" data-lang="en">EN</span>
+        <span class="lt-opt" data-lang="fr">FR</span>
+        <span class="lt-pill"></span>
+      </button>
+      <a href="#contact" class="btn btn-outline contact-trigger" style="padding:.7rem 1.4rem;font-size:.85rem" data-en="Contact" data-fr="Contact">Contact</a>
+      <a href="#contact" class="btn btn-primary" style="padding:.7rem 1.4rem;font-size:.85rem" data-en="Get Started →" data-fr="Commencer →">Get Started →</a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span class="label" id="menuLabel" data-en="Menu" data-fr="Menu">Menu</span>
+        <span class="bars"><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Full-screen overlay nav — opened/closed by NavController from the hamburger button -->
+<nav class="overlay-nav" id="overlayNav">
+  <ul>
+    <li><a href="#home"><span class="idx">01</span><span data-en="Home" data-fr="Accueil">Home</span></a></li>
+    <li><a href="#about"><span class="idx">02</span><span data-en="About" data-fr="À propos">About</span></a></li>
+    <li><a href="#solutions"><span class="idx">03</span><span data-en="Solutions" data-fr="Solutions">Solutions</span></a></li>
+    <li><a href="#services"><span class="idx">04</span><span data-en="Services" data-fr="Services">Services</span></a></li>
+    <li><a href="#blog"><span class="idx">05</span><span data-en="Insights" data-fr="Actualités">Insights</span></a></li>
+    <li><a href="#contact" class="contact-trigger"><span class="idx">06</span><span data-en="Contact" data-fr="Contact">Contact</span></a></li>
+  </ul>
+  <div class="ov-footer">
+    <span>hello@navione.io</span>
+    <span>+1 555 010 2244</span>
+    <span>LinkedIn — Facebook — Instagram</span>
+  </div>
+</nav>
+
+<!-- Hero — 3D tilt/shine on #hero3dCard driven by HeroTiltController -->
+<section class="hero" id="home">
+  <div class="container hero-inner">
+    <div class="fade-in">
+      <div class="hero-eyebrow" id="heroEyebrow"><span class="ew" data-en="Welcome to NAVIONE" data-fr="Bienvenue chez NAVIONE">Welcome to NAVIONE</span></div>
+      <h1 data-en-html="Digital ERP for <em>Modern</em> Construction" data-fr-html="ERP Digital pour la Construction <em>Moderne</em>">Digital ERP for <em>Modern</em> Construction</h1>
+      <div class="hero-bottom">
+        <p data-en="One connected platform to run every site: projects, crews, suppliers, finance, HR and equipment — tracked in real time." data-fr="Une seule plateforme connectée pour piloter chaque chantier : projets, équipes, fournisseurs, finance, RH et équipements — suivis en temps réel.">One connected platform to run every site: projects, crews, suppliers, finance, HR and equipment — tracked in real time.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center">
+          <a href="#solutions" class="btn btn-primary" data-en="Explore Solutions →" data-fr="Voir les Solutions →">Explore Solutions →</a>
+          <a href="#contact" class="btn btn-outline" data-en="Book a Demo" data-fr="Réserver une Démo">Book a Demo</a>
+        </div>
+        <div class="scroll-cue"><span data-en="Scroll" data-fr="Défiler">Scroll</span><span class="line"></span></div>
+      </div>
+    </div>
+    <div class="hero-3d-stage reveal-right">
+      <div class="hero-3d-ground"></div>
+      <div class="hero-3d-card" id="hero3dCard">
+        <div class="glow"></div>
+        <div class="frame-back"></div>
+        <div class="frame-mid"></div>
+        <div class="photo">
+          <img src="assets/hero-photo.png" alt="NAVIONE"/>
+          <div class="edge-lit"></div>
+          <div class="shine" id="hero3dShine"></div>
+        </div>
+        <div class="chip c1" style="--tz:140px"><span class="dot"></span><span data-en="Budget on track" data-fr="Budget maîtrisé">Budget on track</span></div>
+        <div class="chip c2" style="--tz:180px"><span class="dot"></span><span data-en="Site A — 82% complete" data-fr="Chantier A — 82% terminé">Site A — 82% complete</span></div>
+        <div class="chip c3" style="--tz:100px"><span class="dot"></span><span data-en="3 new work orders" data-fr="3 nouveaux ordres de travail">3 new work orders</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Client logos marquee — pure CSS animation, no controller needed -->
+<section class="clients-strip">
+  <div class="container" style="overflow:hidden">
+    <div class="marquee">
+      <img src="assets/client-logo-1.png" alt="Client logo"/>
+      <img src="assets/client-logo-2.png" alt="Client logo"/>
+      <img src="assets/client-logo-3.png" alt="Client logo"/>
+      <img src="assets/client-logo-1.png" alt="Client logo"/>
+      <img src="assets/client-logo-2.png" alt="Client logo"/>
+      <img src="assets/client-logo-3.png" alt="Client logo"/>
+    </div>
+  </div>
+</section>
+
+<!-- About — mouse-tracked tilt on .tilt-3d driven by AboutTiltController -->
+<section class="section" id="about">
+  <div class="container about-grid">
+    <div class="about-visual fade-in tilt-3d">
+      <div class="tilt-inner">
+        <div class="plate"></div>
+        <div class="photo-3d"><img src="assets/about-erp-3d.png" alt="Smarter ERP for a stronger, more efficient build"/></div>
+        <div class="badge"><strong>90%</strong><span data-en="faster reporting cycles" data-fr="de rapports plus rapides">faster reporting cycles</span></div>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="eyebrow" data-en="About Us" data-fr="À Propos">About Us</div>
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:800;line-height:1.15" data-en="Smarter ERP for a stronger, more efficient build" data-fr="Un ERP plus intelligent pour construire plus fort, plus efficacement">Smarter ERP for a stronger, more efficient build</h2>
+      <p style="color:var(--muted);margin-top:1.2rem;font-size:1.05rem" data-en="NAVIONE builds digital platforms for construction and public-works companies that are tired of juggling spreadsheets across sites. We bring projects, procurement, finance and field teams into one system so decisions happen faster." data-fr="NAVIONE conçoit des plateformes digitales pour les entreprises de construction et de travaux publics lassées de jongler avec des tableurs sur chaque chantier. Nous réunissons projets, achats, finance et équipes terrain dans un seul système pour des décisions plus rapides.">NAVIONE builds digital platforms for construction and public-works companies that are tired of juggling spreadsheets across sites. We bring projects, procurement, finance and field teams into one system so decisions happen faster.</p>
+      <ul class="about-list">
+        <li><span class="check">✓</span><span data-en="Track project progress in real time" data-fr="Suivez l'avancement des projets en temps réel">Track project progress in real time</span></li>
+        <li><span class="check">✓</span><span data-en="Control costs and site budgets" data-fr="Maîtrisez les coûts et les budgets chantier">Control costs and site budgets</span></li>
+        <li><span class="check">✓</span><span data-en="Manage equipment, machinery and materials" data-fr="Gérez équipements, machines et matériaux">Manage equipment, machinery and materials</span></li>
+        <li><span class="check">✓</span><span data-en="Plan interventions and allocate crews" data-fr="Planifiez les interventions et affectez les équipes">Plan interventions and allocate crews</span></li>
+      </ul>
+      <a href="#solutions" class="btn btn-primary" style="margin-top:2rem" data-en="More About Us →" data-fr="En savoir plus →">More About Us →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Stats — [data-count] numbers animated up by CounterController on scroll-into-view -->
+<section class="stats-strip">
+  <div class="container">
+    <div class="stat-item fade-in stagger"><strong data-count="24">0</strong><span data-en="Years of Experience" data-fr="Années d'Expérience">Years of Experience</span></div>
+    <div class="stat-item fade-in stagger"><strong data-count="180">0</strong><span data-en="Projects Delivered" data-fr="Projets Livrés">Projects Delivered</span></div>
+    <div class="stat-item fade-in stagger"><strong data-count="45">0</strong><span data-en="Enterprise Clients" data-fr="Clients Entreprise">Enterprise Clients</span></div>
+    <div class="stat-item fade-in stagger"><strong data-count="99">0</strong><span data-en="% Uptime SLA" data-fr="% de Disponibilité SLA">% Uptime SLA</span></div>
+  </div>
+</section>
+
+<!-- Solutions — tab groups (#solTabs / #solTabs2) wired independently by TabsController -->
+<section class="section" id="solutions">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow" data-en="Our Solutions" data-fr="Nos Solutions">Our Solutions</div>
+      <h2 data-en="One platform for all your site operations" data-fr="Une seule plateforme pour toutes vos opérations chantier">One platform for all your site operations</h2>
+      <p data-en="A modular suite built for construction and public-works companies — activate only what your operation needs." data-fr="Une suite modulaire conçue pour les entreprises de construction et travaux publics — activez uniquement ce dont votre activité a besoin.">A modular suite built for construction and public-works companies — activate only what your operation needs.</p>
+    </div>
+    <div class="tabs" role="tablist" id="solTabs">
+      <button class="tab-btn active" data-tab="t1" data-en="Construction ERP" data-fr="ERP Construction">Construction ERP</button>
+      <button class="tab-btn" data-tab="t2" data-en="Maintenance (CMMS)" data-fr="Maintenance (GMAO)">Maintenance (CMMS)</button>
+      <button class="tab-btn" data-tab="t3" data-en="Workforce Management" data-fr="Gestion de la Main-d'œuvre">Workforce Management</button>
+      <button class="tab-btn" data-tab="t4" data-en="Invoicing" data-fr="Facturation">Invoicing</button>
+    </div>
+    <div class="fade-in">
+      <div class="tab-panel active" id="t1">
+        <div><h3 data-en="ERP Construction Module" data-fr="Module ERP Construction">ERP Construction Module</h3><p data-en="An integrated digital solution for construction and public-works companies to centralize, automate and manage site operations in real time." data-fr="Une solution digitale intégrée pour les entreprises de construction et travaux publics, pour centraliser, automatiser et piloter les opérations chantier en temps réel.">An integrated digital solution for construction and public-works companies to centralize, automate and manage site operations in real time.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-erp.jpg" alt="ERP Construction Module"/></div></div>
+      </div>
+      <div class="tab-panel" id="t2">
+        <div><h3 data-en="Intelligent CMMS Solution" data-fr="Solution GMAO Intelligente">Intelligent CMMS Solution</h3><p data-en="Optimize industrial maintenance management with a modern, connected, performance-driven platform." data-fr="Optimisez la maintenance industrielle avec une plateforme moderne, connectée et orientée performance.">Optimize industrial maintenance management with a modern, connected, performance-driven platform.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-cmms.jpg" alt="Intelligent CMMS Solution"/></div></div>
+      </div>
+      <div class="tab-panel" id="t3">
+        <div><h3 data-en="Intelligent Expatriate Management" data-fr="Gestion Intelligente des Expatriés">Intelligent Expatriate Management</h3><p data-en="Centralized, smart management of expatriates for efficient tracking and coordination." data-fr="Gestion centralisée et intelligente des expatriés pour un suivi et une coordination efficaces.">Centralized, smart management of expatriates for efficient tracking and coordination.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-expat.jpg" alt="Expatriate Management"/></div></div>
+      </div>
+      <div class="tab-panel" id="t4">
+        <div><h3 data-en="Invoice Management" data-fr="Gestion des Factures">Invoice Management</h3><p data-en="Automate, centralize and secure the entire invoicing cycle — from creation to archiving." data-fr="Automatisez, centralisez et sécurisez tout le cycle de facturation — de la création à l'archivage.">Automate, centralize and secure the entire invoicing cycle — from creation to archiving.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-invoice.jpg" alt="Invoice Management"/></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="tabs" role="tablist" id="solTabs2">
+      <button class="tab-btn active" data-tab="t5" data-en="Intelligent Payroll Engine" data-fr="Moteur de Paie Intelligent">Intelligent Payroll Engine</button>
+      <button class="tab-btn" data-tab="t6" data-en="Inventory Management" data-fr="Gestion des Stocks">Inventory Management</button>
+      <button class="tab-btn" data-tab="t7" data-en="Rent Management" data-fr="Gestion Locative">Rent Management</button>
+      <button class="tab-btn" data-tab="t8" data-en="Fuel Management" data-fr="Gestion du Carburant">Fuel Management</button>
+    </div>
+    <div class="fade-in">
+      <div class="tab-panel active" id="t5">
+        <div><h3 data-en="Intelligent Payroll Engine" data-fr="Moteur de Paie Intelligent">Intelligent Payroll Engine</h3><p data-en="Automated salary calculations integrating legal, contractual and operational variables for accuracy and compliance." data-fr="Calcul automatisé des salaires intégrant les variables légales, contractuelles et opérationnelles, pour plus de précision et de conformité.">Automated salary calculations integrating legal, contractual and operational variables for accuracy and compliance.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-payroll.jpg" alt="Payroll Engine"/></div></div>
+      </div>
+      <div class="tab-panel" id="t6">
+        <div><h3 data-en="Inventory Management Module" data-fr="Module de Gestion des Stocks">Inventory Management Module</h3><p data-en="A clear, real-time view of inventory status through a dynamic and intuitive interface." data-fr="Une vue claire et en temps réel de l'état des stocks grâce à une interface dynamique et intuitive.">A clear, real-time view of inventory status through a dynamic and intuitive interface.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-inventory.jpg" alt="Inventory Management"/></div></div>
+      </div>
+      <div class="tab-panel" id="t7">
+        <div><h3 data-en="Rent Management Module" data-fr="Module de Gestion Locative">Rent Management Module</h3><p data-en="Manage rent payments, leases, tenants and billing through one centralized, efficient system." data-fr="Gérez loyers, baux, locataires et facturation via un système centralisé et efficace.">Manage rent payments, leases, tenants and billing through one centralized, efficient system.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-rent.jpg" alt="Rent Management"/></div></div>
+      </div>
+      <div class="tab-panel" id="t8">
+        <div><h3 data-en="Fuel Management Module" data-fr="Module de Gestion du Carburant">Fuel Management Module</h3><p data-en="Track fuel consumption, allocations, costs and usage efficiently through centralized management." data-fr="Suivez consommation, allocations, coûts et usage du carburant efficacement via une gestion centralisée.">Track fuel consumption, allocations, costs and usage efficiently through centralized management.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-fuel.jpg" alt="Fuel Management"/></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- Why NAVIONE — static content, no controller involved -->
+      <div class="eyebrow" data-en="Why NAVIONE" data-fr="Pourquoi NAVIONE">Why NAVIONE</div>
+      <h2 data-en="Built for real construction operations" data-fr="Conçu pour les vraies opérations de chantier">Built for real construction operations</h2>
+    </div>
+    <div class="why-wrap">
+      <div class="why-photo fade-in"><div class="t3"><img src="assets/why-choose.jpg" alt="Why choose NAVIONE"/></div></div>
+      <div class="why-grid">
+        <div class="why-item fade-in stagger"><div class="num">01</div><h3 data-en="BTP Industry Expertise" data-fr="Expertise du Secteur BTP">BTP Industry Expertise</h3><p data-en="Designed specifically for construction, public works and civil engineering companies." data-fr="Conçu spécifiquement pour les entreprises de construction, travaux publics et génie civil.">Designed specifically for construction, public works and civil engineering companies.</p></div>
+        <div class="why-item fade-in stagger"><div class="num">02</div><h3 data-en="Real-Time Monitoring" data-fr="Suivi en Temps Réel">Real-Time Monitoring</h3><p data-en="Monitor your projects and teams anytime, anywhere, on a connected platform." data-fr="Suivez vos projets et équipes à tout moment, depuis n'importe où, sur une plateforme connectée.">Monitor your projects and teams anytime, anywhere, on a connected platform.</p></div>
+        <div class="why-item fade-in stagger"><div class="num">03</div><h3 data-en="Cost Reduction" data-fr="Réduction des Coûts">Cost Reduction</h3><p data-en="Quickly identify unnecessary expenses, equipment breakdowns and delays to improve profitability." data-fr="Identifiez rapidement dépenses inutiles, pannes d'équipement et retards pour améliorer la rentabilité.">Quickly identify unnecessary expenses, equipment breakdowns and delays to improve profitability.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- Services — static content, no controller involved -->
+      <div class="eyebrow" data-en="Our Services" data-fr="Nos Services">Our Services</div>
+      <h2 data-en="Know our best services" data-fr="Découvrez nos meilleurs services">Know our best services</h2>
+      <p data-en="End-to-end delivery — from platform setup to ongoing optimization." data-fr="Un accompagnement de bout en bout — du déploiement de la plateforme à l'optimisation continue.">End-to-end delivery — from platform setup to ongoing optimization.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-d365.jpg" alt="Microsoft D365 Business Central"/><span class="ribbon">01</span></div><div class="card-body"><h3 data-en="Microsoft D365 Business Central" data-fr="Microsoft D365 Business Central">Microsoft D365 Business Central</h3><p data-en="Setup and customization of Business Central with cloud migration to modernize your operations." data-fr="Déploiement et personnalisation de Business Central avec migration cloud pour moderniser vos opérations.">Setup and customization of Business Central with cloud migration to modernize your operations.</p></div></div>
+      <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-powerbi.jpg" alt="Power BI & Reporting"/><span class="ribbon">02</span></div><div class="card-body"><h3 data-en="Power BI &amp; Reporting" data-fr="Power BI &amp; Reporting">Power BI &amp; Reporting</h3><p data-en="Clear, interactive dashboards with Power BI that turn your data into actionable insight." data-fr="Des tableaux de bord clairs et interactifs avec Power BI qui transforment vos données en décisions concrètes.">Clear, interactive dashboards with Power BI that turn your data into actionable insight.</p></div></div>
+      <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-webdev.jpg" alt="Web Development"/><span class="ribbon">03</span></div><div class="card-body"><h3 data-en="Web Development" data-fr="Développement Web">Web Development</h3><p data-en="Corporate websites, eCommerce platforms and custom web applications built around your needs." data-fr="Sites vitrines, plateformes e-commerce et applications web sur mesure, conçus autour de vos besoins.">Corporate websites, eCommerce platforms and custom web applications built around your needs.</p></div></div>
+      <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-powerplatform.jpg" alt="Microsoft Power Platform"/><span class="ribbon">04</span></div><div class="card-body"><h3 data-en="Microsoft Power Platform" data-fr="Microsoft Power Platform">Microsoft Power Platform</h3><p data-en="Build apps, automate workflows and analyze data to drive digital transformation." data-fr="Créez des applications, automatisez les workflows et analysez vos données pour piloter la transformation digitale.">Build apps, automate workflows and analyze data to drive digital transformation.</p></div></div>
+      <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-audit.jpg" alt="IT Systems Audit & Consulting"/><span class="ribbon">05</span></div><div class="card-body"><h3 data-en="IT Systems Audit &amp; Consulting" data-fr="Audit &amp; Conseil en Systèmes IT">IT Systems Audit &amp; Consulting</h3><p data-en="Expert assessment and support to keep your IT infrastructure secure and efficient." data-fr="Évaluation experte et accompagnement pour garder votre infrastructure IT sécurisée et performante.">Expert assessment and support to keep your IT infrastructure secure and efficient.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header fade-in">
+      <!-- Testimonials — static content, no controller involved -->
+      <div class="eyebrow" data-en="Testimonials" data-fr="Témoignages">Testimonials</div>
+      <h2 data-en="What our clients say" data-fr="Ce que disent nos clients">What our clients say</h2>
+    </div>
+    <div class="grid-3">
+      <div class="testi-card fade-in stagger"><span class="quote">"</span><p data-en="Since switching to NAVIONE, our site managers report progress the same day instead of at week's end." data-fr="Depuis notre passage à NAVIONE, nos chefs de chantier remontent l'avancement le jour même au lieu d'attendre la fin de semaine.">Since switching to NAVIONE, our site managers report progress the same day instead of at week's end.</p><div class="testi-person"><div class="avatar">E</div><div><strong>Edward S.</strong><span data-en="Operations Director" data-fr="Directeur des Opérations">Operations Director</span></div></div></div>
+      <div class="testi-card fade-in stagger"><span class="quote">"</span><p data-en="The maintenance module alone cut our equipment downtime by nearly a third in the first quarter." data-fr="Le seul module maintenance a réduit nos arrêts d'équipement de près d'un tiers dès le premier trimestre.">The maintenance module alone cut our equipment downtime by nearly a third in the first quarter.</p><div class="testi-person"><div class="avatar">M</div><div><strong>Miley S.</strong><span data-en="Fleet Manager" data-fr="Responsable de Flotte">Fleet Manager</span></div></div></div>
+      <div class="testi-card fade-in stagger"><span class="quote">"</span><p data-en="Finance finally has real-time visibility into every site's budget, not a spreadsheet from last month." data-fr="La finance a enfin une visibilité en temps réel sur le budget de chaque chantier, plus un tableur du mois dernier.">Finance finally has real-time visibility into every site's budget, not a spreadsheet from last month.</p><div class="testi-person"><div class="avatar">R</div><div><strong>Ryan K.</strong><span data-en="CFO" data-fr="Directeur Financier">CFO</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact CTA band — .contact-trigger not used here, just an anchor link -->
+<div class="section" id="contact">
+  <div class="cta-band fade-in">
+    <h2 data-en="Have a project? Let's build it together." data-fr="Un projet en tête ? Construisons-le ensemble.">Have a project? Let's build it together.</h2>
+    <p data-en="Book a free walkthrough of the NAVIONE platform." data-fr="Réservez une démonstration gratuite de la plateforme NAVIONE.">Book a free walkthrough of the NAVIONE platform.</p>
+    <a href="#" class="btn btn-primary" data-en="Book a Demo →" data-fr="Réserver une Démo →">Book a Demo →</a>
+  </div>
+</div>
+
+<!-- Blog / Insights — static content, no controller involved -->
+<section class="section" id="blog">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow" data-en="Insights" data-fr="Actualités">Insights</div>
+      <h2 data-en="Latest from NAVIONE" data-fr="Les dernières actualités NAVIONE">Latest from NAVIONE</h2>
+    </div>
+    <div class="grid-3">
+      <div class="blog-card fade-in stagger"><div class="blog-thumb"><img src="assets/blog-1.jpg" alt="Analyzing The Market Through Software"/></div><div class="blog-body"><div class="blog-date">Apr 01</div><h3 data-en="Analyzing The Market Through Software" data-fr="Analyser le Marché Grâce au Logiciel">Analyzing The Market Through Software</h3><p data-en="How connected data helps teams read market shifts sooner." data-fr="Comment des données connectées aident les équipes à anticiper les évolutions du marché.">How connected data helps teams read market shifts sooner.</p></div></div>
+      <div class="blog-card fade-in stagger"><div class="blog-thumb"><img src="assets/blog-2.jpg" alt="Plans & Structure To Digital Marketing"/></div><div class="blog-body"><div class="blog-date">Apr 01</div><h3 data-en="Plans &amp; Structure To Digital Marketing" data-fr="Plans &amp; Structure pour le Marketing Digital">Plans &amp; Structure To Digital Marketing</h3><p data-en="Building a marketing plan that scales with the business." data-fr="Construire un plan marketing qui grandit avec l'entreprise.">Building a marketing plan that scales with the business.</p></div></div>
+      <div class="blog-card fade-in stagger"><div class="blog-thumb"><img src="assets/blog-3.jpg" alt="Outcome From Best Possible Businesses"/></div><div class="blog-body"><div class="blog-date">Apr 01</div><h3 data-en="Outcome From Best Possible Businesses" data-fr="Les Résultats des Entreprises les Plus Performantes">Outcome From Best Possible Businesses</h3><p data-en="What consistently high-performing companies do differently." data-fr="Ce que font différemment les entreprises constamment performantes.">What consistently high-performing companies do differently.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer — static content, no controller involved -->
+<footer>
+  <div class="container footer-grid">
+    <div class="fade-in stagger">
+      <a href="#" class="logo"><img src="assets/logo-navione-dark-transparent.png" alt="NAVIONE"/></a>
+      <p style="margin-top:1.2rem;font-size:.9rem;max-width:280px;color:var(--muted)" data-en="A construction-focused ERP platform helping teams plan, build and operate with one connected system." data-fr="Une plateforme ERP dédiée à la construction pour planifier, bâtir et exploiter avec un seul système connecté.">A construction-focused ERP platform helping teams plan, build and operate with one connected system.</p>
+    </div>
+    <div class="fade-in stagger">
+      <h4 data-en="Company" data-fr="Entreprise">Company</h4>
+      <ul><li><a href="#about" data-en="About Us" data-fr="À Propos">About Us</a></li><li><a href="#services" data-en="Services" data-fr="Services">Services</a></li><li><a href="#solutions" data-en="Solutions" data-fr="Solutions">Solutions</a></li><li><a href="#blog" data-en="Insights" data-fr="Actualités">Insights</a></li></ul>
+    </div>
+    <div class="fade-in stagger">
+      <h4 data-en="Solutions" data-fr="Solutions">Solutions</h4>
+      <ul><li><a href="#solutions" data-en="Construction ERP" data-fr="ERP Construction">Construction ERP</a></li><li><a href="#solutions" data-en="Maintenance" data-fr="Maintenance">Maintenance</a></li><li><a href="#solutions" data-en="Workforce" data-fr="Main-d'œuvre">Workforce</a></li><li><a href="#solutions" data-en="Invoicing" data-fr="Facturation">Invoicing</a></li></ul>
+    </div>
+    <div class="fade-in stagger">
+      <h4 data-en="Contact" data-fr="Contact">Contact</h4>
+      <ul>
+        <li>400 Site Ave, Suite 12</li>
+        <li>+1 555 010 2244</li>
+        <li>hello@navione.io</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom" data-en="Copyright © 2026 NAVIONE. All rights reserved." data-fr="Copyright © 2026 NAVIONE. Tous droits réservés.">Copyright © 2026 NAVIONE. All rights reserved.</div>
+</footer>
+
+<!-- Back-to-top button — visibility toggled by ScrollController -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+
+<!-- Controllers bootstrap — see js/app.js for the MVC wiring -->
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
