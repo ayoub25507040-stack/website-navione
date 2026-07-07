@@ -8,9 +8,11 @@
  *
  * This file just wires every Controller to the page once it's parsed.
  */
+import * as PageTransitionController from './controllers/PageTransitionController.js';
 import * as PreloaderController from './controllers/PreloaderController.js';
 import * as LanguageController from './controllers/LanguageController.js';
 import * as ModalController from './controllers/ModalController.js';
+import * as SolutionModalController from './controllers/SolutionModalController.js';
 import * as CursorGlowController from './controllers/CursorGlowController.js';
 import * as AboutTiltController from './controllers/AboutTiltController.js';
 import * as HeroTiltController from './controllers/HeroTiltController.js';
@@ -21,9 +23,11 @@ import * as CounterController from './controllers/CounterController.js';
 import * as TabsController from './controllers/TabsController.js';
 
 function init() {
+  PageTransitionController.init();
   PreloaderController.init();
   LanguageController.init();
   ModalController.init();
+  SolutionModalController.init();
   CursorGlowController.init();
   AboutTiltController.init();
   HeroTiltController.init();

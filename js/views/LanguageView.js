@@ -24,22 +24,3 @@ export function updateToggleUI(lang) {
   toggle.classList.toggle('fr', lang === 'fr');
   toggle.querySelectorAll('.lt-opt').forEach(o => o.classList.toggle('active', o.dataset.lang === lang));
 }
-
-export function showVeil() {
-  document.getElementById('langTransition')?.classList.add('show');
-}
-export function hideVeil() {
-  document.getElementById('langTransition')?.classList.remove('show');
-}
-export function setVeilDrift(on) {
-  document.getElementById('langTransition')?.classList.toggle('drift', on);
-}
-
-export function showCenterMark(lang) {
-  const sub = document.getElementById('lcmSub');
-  if (sub) sub.textContent = lang === 'fr' ? 'Français' : 'English';
-  document.getElementById('langCenterMark')?.classList.add('show');
-}
-export function hideCenterMark() {
-  document.getElementById('langCenterMark')?.classList.remove('show');
-}

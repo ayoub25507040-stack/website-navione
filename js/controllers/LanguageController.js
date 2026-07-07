@@ -1,5 +1,6 @@
 import { AppState } from '../models/AppState.js';
 import * as LanguageView from '../views/LanguageView.js';
+import * as TransitionView from '../views/TransitionView.js';
 
 // Timings for the 3D "blinds" veil transition.
 const FADE = 600; // ms — matches the CSS opacity transition on #langTransition
@@ -19,19 +20,19 @@ function playTransition(lang) {
   AppState.isLangAnimating = true;
   clearPendingTimers();
 
-  LanguageView.showVeil();
+  TransitionView.showVeil();
 
   after(() => {
-    LanguageView.showCenterMark(lang);
-    LanguageView.setVeilDrift(true);
+    TransitionView.showCenterMark(lang === 'fr' ? 'Français' : 'English');
+    TransitionView.setVeilDrift(true);
     LanguageView.applyTranslations(lang);
     LanguageView.updateToggleUI(lang);
   }, FADE);
 
   after(() => {
-    LanguageView.hideCenterMark();
-    LanguageView.setVeilDrift(false);
-    LanguageView.hideVeil();
+    TransitionView.hideCenterMark();
+    TransitionView.setVeilDrift(false);
+    TransitionView.hideVeil();
   }, FADE + HOLD);
 
   after(() => { AppState.isLangAnimating = false; }, FADE + HOLD + FADE + 60);

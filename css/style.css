@@ -45,6 +45,13 @@ button{font-family:var(--font);cursor:pointer;border:none;background:none;color:
 #cursorGlow{position:fixed;top:0;left:0;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(59,78,255,.10),transparent 70%);pointer-events:none;z-index:1;transform:translate(-50%,-50%);transition:opacity .3s ease;opacity:0}
 @media (max-width:960px){#cursorGlow{display:none}}
 
+/* ── Page transition veil — covers on load, fades away; fades back in
+   before leaving to a sub-page. Opaque by default (no JS = stays covering,
+   never a half-broken flash) so mark it hidden for no-JS via <noscript>. ── */
+#pageTransition{position:fixed;inset:0;z-index:5000;background:linear-gradient(160deg,#0B0E1E 0%,#171B36 55%,#0B0E1E 100%);opacity:1;pointer-events:none;transition:opacity .5s cubic-bezier(.22,1,.36,1)}
+#pageTransition.leaving{opacity:1;pointer-events:auto}
+#pageTransition.hidden{opacity:0}
+
 /* ── Language-switch transition — simple, robust, cannot get stuck ──
    A plain opacity fade (no 3D-in-flex tricks) so it is 100% invisible and
    non-blocking at rest, and never lingers over the page. */
@@ -52,7 +59,7 @@ button{font-family:var(--font);cursor:pointer;border:none;background:none;color:
 #langTransition.show{opacity:1;visibility:visible;pointer-events:auto;backdrop-filter:blur(6px);transition:opacity .6s cubic-bezier(.22,1,.36,1),backdrop-filter .6s ease,visibility 0s linear 0s}
 #langTransition.show.drift{animation:langDrift 1.2s ease-in-out infinite alternate}
 @keyframes langDrift{from{background-position:0% 50%}to{background-position:100% 50%}}
-#langCenterMark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.5) rotateX(60deg);z-index:3001;pointer-events:none;opacity:0;display:flex;flex-direction:column;align-items:center;gap:.9rem;perspective:600px;transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.34,1.56,.64,1)}
+#langCenterMark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.5) rotateX(60deg);z-index:5001;pointer-events:none;opacity:0;display:flex;flex-direction:column;align-items:center;gap:.9rem;perspective:600px;transition:opacity .3s cubic-bezier(.22,1,.36,1),transform .4s cubic-bezier(.34,1.56,.64,1)}
 #langCenterMark.show{opacity:1;transform:translate(-50%,-50%) scale(1) rotateX(0)}
 #langCenterMark .lcm-ring{position:absolute;top:50%;left:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:1px solid rgba(110,123,255,.4);transform:scale(.6);opacity:0}
 #langCenterMark .lcm-ring.r2{border-color:rgba(242,169,59,.35)}
@@ -172,6 +179,7 @@ header.site-header.scrolled .logo img{height:64px}
 .overlay-nav li:nth-child(4) a{transition-delay:.26s}
 .overlay-nav li:nth-child(5) a{transition-delay:.32s}
 .overlay-nav li:nth-child(6) a{transition-delay:.38s}
+.overlay-nav li:nth-child(7) a{transition-delay:.44s}
 .overlay-nav a:hover{opacity:1;color:var(--accent-l)}
 .overlay-nav a .idx{font-family:var(--font);font-weight:600;font-size:.9rem;color:var(--accent-l);opacity:.8}
 .overlay-nav .ov-footer{margin-top:3rem;display:flex;gap:2.5rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem}
@@ -247,6 +255,12 @@ header.site-header.scrolled .logo img{height:64px}
 .about-list{margin-top:1.8rem;display:grid;gap:1rem}
 .about-list li{display:flex;gap:.8rem;align-items:flex-start;font-weight:600}
 .about-list li .check{flex:0 0 24px;height:24px;border-radius:50%;background:rgba(59,78,255,.15);color:var(--accent-l);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900}
+
+/* ── Solution detail modal panels — one per "See More", toggled via SolutionModalController ── */
+.solution-detail-panel{display:none;position:relative;z-index:1;max-height:60vh;overflow-y:auto}
+.solution-detail-panel.active{display:block}
+.solution-detail-panel h3{font-size:1.6rem;font-weight:800;margin-bottom:.4rem}
+.solution-detail-panel .about-list{margin-top:1.4rem}
 
 /* ── Stats strip ── */
 .stats-strip{background:rgba(9,11,20,.55);backdrop-filter:blur(20px);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1}

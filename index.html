@@ -21,6 +21,13 @@
      until their matching controller in js/controllers/ runs.
 ═══════════════════════════════════════════════════════ -->
 
+<!-- Page transition veil — covers the page on load/leave so navigating to a
+     sub-page (e.g. bovi-gest/) fades instead of hard-cutting. See
+     PageTransitionController. Opaque by default so it also masks any flash
+     of unstyled content before JS runs. -->
+<div id="pageTransition"></div>
+<noscript><style>#pageTransition{display:none}</style></noscript>
+
 <!-- Preloader — hidden by PreloaderController once window 'load' fires -->
 <div id="preloader"><div class="mark"><span>NAVI</span><span>ONE</span></div></div>
 <div id="cursorGlow"></div>
@@ -57,6 +64,69 @@
     <a href="mailto:hello@navione.io" class="btn btn-primary cm-cta" data-en="Send us a message →" data-fr="Envoyez-nous un message →">Send us a message →</a>
   </div>
 </div>
+
+<!-- Solution detail modal — opened by SolutionModalController from each "See More" link -->
+<div class="contact-modal" id="solutionModal" aria-hidden="true">
+  <div class="cm-backdrop" id="solutionModalBackdrop"></div>
+  <div class="cm-card" style="width:min(600px,90vw)" role="dialog" aria-modal="true" aria-label="Solution detail">
+    <button class="cm-close" id="solutionModalClose" aria-label="Close">✕</button>
+    <div class="cm-glow"></div>
+    <div class="cm-eyebrow" data-en="Solution Detail" data-fr="Détail de la Solution">Solution Detail</div>
+
+    <div class="solution-detail-panel" data-solution="t1">
+      <h3 data-en="GENYX-365 Construction" data-fr="GENYX-365 Construction">GENYX-365 Construction</h3>
+      <ul class="about-list">
+        <li><span class="check">✓</span><span data-en="General ledger, invoices & payment tracking" data-fr="Comptabilité générale : suivi des opérations, factures et paiements">General ledger, invoices & payment tracking</span></li>
+        <li><span class="check">✓</span><span data-en="Fixed-asset registration & depreciation" data-fr="Enregistrement et amortissement des immobilisations">Fixed-asset registration & depreciation</span></li>
+        <li><span class="check">✓</span><span data-en="Financial dashboards & KPI reporting" data-fr="Tableaux de bord et indicateurs financiers clés">Financial dashboards & KPI reporting</span></li>
+        <li><span class="check">✓</span><span data-en="Supplier database & order history" data-fr="Base de données fournisseurs et historique des commandes">Supplier database & order history</span></li>
+        <li><span class="check">✓</span><span data-en="Automated purchase orders from stock levels" data-fr="Commandes d'achat automatisées selon les niveaux de stock">Automated purchase orders from stock levels</span></li>
+        <li><span class="check">✓</span><span data-en="Budget control with overspend alerts" data-fr="Contrôle budgétaire avec alertes de dépassement">Budget control with overspend alerts</span></li>
+        <li><span class="check">✓</span><span data-en="Project planning with task, budget & resource tools" data-fr="Planification de projets avec outils de tâches, budget et ressources">Project planning with task, budget & resource tools</span></li>
+        <li><span class="check">✓</span><span data-en="Risk & issue tracking with dedicated dashboards" data-fr="Suivi des risques et problèmes via des tableaux de bord dédiés">Risk & issue tracking with dedicated dashboards</span></li>
+        <li><span class="check">✓</span><span data-en="Sales opportunity tracking, from lead to order" data-fr="Suivi des opportunités commerciales, de la prospection à la commande">Sales opportunity tracking, from lead to order</span></li>
+        <li><span class="check">✓</span><span data-en="Technical & financial quotes with margin calculation" data-fr="Devis technique et financier avec calcul de marge">Technical & financial quotes with margin calculation</span></li>
+        <li><span class="check">✓</span><span data-en="Gantt-based project scheduling" data-fr="Planification de projets sous forme de Gantt">Gantt-based project scheduling</span></li>
+        <li><span class="check">✓</span><span data-en="Cross-project workload planning" data-fr="Plan de charge multi-projets">Cross-project workload planning</span></li>
+      </ul>
+    </div>
+
+    <div class="solution-detail-panel" data-solution="t2">
+      <h3 data-en="Maintenance (CMMS)" data-fr="Maintenance (GMAO)">Maintenance (CMMS)</h3>
+      <ul class="about-list">
+        <li><span class="check">✓</span><span data-en="Intervention request logging & triage" data-fr="Enregistrement et tri des demandes d'intervention">Intervention request logging & triage</span></li>
+        <li><span class="check">✓</span><span data-en="Preventive maintenance scheduling" data-fr="Planification de la maintenance préventive">Preventive maintenance scheduling</span></li>
+        <li><span class="check">✓</span><span data-en="Curative flow: report → diagnose → repair" data-fr="Cycle curatif : signalement → diagnostic → réparation">Curative flow: report → diagnose → repair</span></li>
+        <li><span class="check">✓</span><span data-en="Centralized equipment history & spare parts" data-fr="Historique des équipements et pièces de rechange centralisés">Centralized equipment history & spare parts</span></li>
+        <li><span class="check">✓</span><span data-en="Spare-parts stock to avoid shortages" data-fr="Gestion des stocks de pièces pour éviter les ruptures">Spare-parts stock to avoid shortages</span></li>
+        <li><span class="check">✓</span><span data-en="Maintenance performance dashboards" data-fr="Tableaux de bord de performance de maintenance">Maintenance performance dashboards</span></li>
+      </ul>
+    </div>
+
+    <div class="solution-detail-panel" data-solution="t3">
+      <h3 data-en="Workforce Management" data-fr="Gestion de la Main-d'œuvre">Workforce Management</h3>
+      <ul class="about-list">
+        <li><span class="check">✓</span><span data-en="Project team & resource assignment" data-fr="Affectation des équipes et ressources par projet">Project team & resource assignment</span></li>
+        <li><span class="check">✓</span><span data-en="Workload planning across projects" data-fr="Plan de charge multi-projets">Workload planning across projects</span></li>
+        <li><span class="check">✓</span><span data-en="Timesheets vs. budget tracking" data-fr="Suivi des feuilles de temps vs budget">Timesheets vs. budget tracking</span></li>
+        <li><span class="check">✓</span><span data-en="Automated payroll & social contributions" data-fr="Calcul automatisé de la paie et des cotisations">Automated payroll & social contributions</span></li>
+        <li><span class="check">✓</span><span data-en="Leave, absences & advances management" data-fr="Gestion des congés, absences et avances">Leave, absences & advances management</span></li>
+        <li><span class="check">✓</span><span data-en="Digital payslips, sent & archived automatically" data-fr="Bulletins de paie numériques, envoyés et archivés automatiquement">Digital payslips, sent & archived automatically</span></li>
+      </ul>
+    </div>
+
+    <div class="solution-detail-panel" data-solution="t4">
+      <h3 data-en="Invoicing" data-fr="Facturation">Invoicing</h3>
+      <ul class="about-list">
+        <li><span class="check">✓</span><span data-en="Custom invoices per project & contract terms" data-fr="Factures sur mesure par projet et par contrat">Custom invoices per project & contract terms</span></li>
+        <li><span class="check">✓</span><span data-en="Work-completion attachments tracking" data-fr="Suivi des attachements et métrés de travaux">Work-completion attachments tracking</span></li>
+        <li><span class="check">✓</span><span data-en="Payment & outstanding balance follow-up" data-fr="Suivi des paiements et des soldes dus">Payment & outstanding balance follow-up</span></li>
+        <li><span class="check">✓</span><span data-en="Cost vs. revenue tracking per project" data-fr="Suivi des coûts et revenus par projet">Cost vs. revenue tracking per project</span></li>
+        <li><span class="check">✓</span><span data-en="KPIs & forecasts shared with management" data-fr="Indicateurs et prévisions partagés avec la direction">KPIs & forecasts shared with management</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
 <div id="scrollProgress"></div>
 
 <!-- Site header — "scrolled" state toggled by ScrollController -->
@@ -68,6 +138,7 @@
       <a href="#about" data-en="About" data-fr="À propos">About</a>
       <a href="#solutions" data-en="Solutions" data-fr="Solutions">Solutions</a>
       <a href="#services" data-en="Services" data-fr="Services">Services</a>
+      <a href="#portfolio" data-en="Our Work" data-fr="Réalisations">Our Work</a>
       <a href="#blog" data-en="Insights" data-fr="Actualités">Insights</a>
     </nav>
     <div class="header-actions">
@@ -93,8 +164,9 @@
     <li><a href="#about"><span class="idx">02</span><span data-en="About" data-fr="À propos">About</span></a></li>
     <li><a href="#solutions"><span class="idx">03</span><span data-en="Solutions" data-fr="Solutions">Solutions</span></a></li>
     <li><a href="#services"><span class="idx">04</span><span data-en="Services" data-fr="Services">Services</span></a></li>
-    <li><a href="#blog"><span class="idx">05</span><span data-en="Insights" data-fr="Actualités">Insights</span></a></li>
-    <li><a href="#contact" class="contact-trigger"><span class="idx">06</span><span data-en="Contact" data-fr="Contact">Contact</span></a></li>
+    <li><a href="#portfolio"><span class="idx">05</span><span data-en="Our Work" data-fr="Réalisations">Our Work</span></a></li>
+    <li><a href="#blog"><span class="idx">06</span><span data-en="Insights" data-fr="Actualités">Insights</span></a></li>
+    <li><a href="#contact" class="contact-trigger"><span class="idx">07</span><span data-en="Contact" data-fr="Contact">Contact</span></a></li>
   </ul>
   <div class="ov-footer">
     <span>hello@navione.io</span>
@@ -195,26 +267,26 @@
       <p data-en="A modular suite built for construction and public-works companies — activate only what your operation needs." data-fr="Une suite modulaire conçue pour les entreprises de construction et travaux publics — activez uniquement ce dont votre activité a besoin.">A modular suite built for construction and public-works companies — activate only what your operation needs.</p>
     </div>
     <div class="tabs" role="tablist" id="solTabs">
-      <button class="tab-btn active" data-tab="t1" data-en="Construction ERP" data-fr="ERP Construction">Construction ERP</button>
+      <button class="tab-btn active" data-tab="t1" data-en="Construction GENYX-365" data-fr="GENYX-365 Construction">Construction GENYX-365</button>
       <button class="tab-btn" data-tab="t2" data-en="Maintenance (CMMS)" data-fr="Maintenance (GMAO)">Maintenance (CMMS)</button>
       <button class="tab-btn" data-tab="t3" data-en="Workforce Management" data-fr="Gestion de la Main-d'œuvre">Workforce Management</button>
       <button class="tab-btn" data-tab="t4" data-en="Invoicing" data-fr="Facturation">Invoicing</button>
     </div>
     <div class="fade-in">
       <div class="tab-panel active" id="t1">
-        <div><h3 data-en="ERP Construction Module" data-fr="Module ERP Construction">ERP Construction Module</h3><p data-en="An integrated digital solution for construction and public-works companies to centralize, automate and manage site operations in real time." data-fr="Une solution digitale intégrée pour les entreprises de construction et travaux publics, pour centraliser, automatiser et piloter les opérations chantier en temps réel.">An integrated digital solution for construction and public-works companies to centralize, automate and manage site operations in real time.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
-        <div class="tab-img"><div class="t3"><img src="assets/tab-erp.jpg" alt="ERP Construction Module"/></div></div>
+        <div><h3 data-en="GENYX-365 Construction Module" data-fr="Module GENYX-365 Construction">GENYX-365 Construction Module</h3><p data-en="An integrated digital solution for construction and public-works companies to centralize, automate and manage site operations in real time." data-fr="Une solution digitale intégrée pour les entreprises de construction et travaux publics, pour centraliser, automatiser et piloter les opérations chantier en temps réel.">An integrated digital solution for construction and public-works companies to centralize, automate and manage site operations in real time.</p><ul class="about-list"><li><span class="check">✓</span><span data-en="Financial accounting, fixed assets & reporting" data-fr="Comptabilité générale, immobilisations et reporting financier">Financial accounting, fixed assets & reporting</span></li><li><span class="check">✓</span><span data-en="Purchasing, suppliers & budget control" data-fr="Achats, fournisseurs et contrôle budgétaire">Purchasing, suppliers & budget control</span></li><li><span class="check">✓</span><span data-en="Project planning, budgeting & tracking" data-fr="Planification, budgétisation et suivi de projets">Project planning, budgeting & tracking</span></li><li><span class="check">✓</span><span data-en="Inventory & replenishment management" data-fr="Gestion des stocks et des réapprovisionnements">Inventory & replenishment management</span></li></ul><a href="#" class="btn btn-outline solution-more" data-solution="t1" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div class="tab-img"><div class="t3"><img src="assets/tab-erp.jpg" alt="GENYX-365 Construction Module"/></div></div>
       </div>
       <div class="tab-panel" id="t2">
-        <div><h3 data-en="Intelligent CMMS Solution" data-fr="Solution GMAO Intelligente">Intelligent CMMS Solution</h3><p data-en="Optimize industrial maintenance management with a modern, connected, performance-driven platform." data-fr="Optimisez la maintenance industrielle avec une plateforme moderne, connectée et orientée performance.">Optimize industrial maintenance management with a modern, connected, performance-driven platform.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div><h3 data-en="Intelligent CMMS Solution" data-fr="Solution GMAO Intelligente">Intelligent CMMS Solution</h3><p data-en="Optimize industrial maintenance management with a modern, connected, performance-driven platform." data-fr="Optimisez la maintenance industrielle avec une plateforme moderne, connectée et orientée performance.">Optimize industrial maintenance management with a modern, connected, performance-driven platform.</p><ul class="about-list"><li><span class="check">✓</span><span data-en="Preventive & curative maintenance scheduling" data-fr="Planification des interventions préventives et curatives">Preventive & curative maintenance scheduling</span></li><li><span class="check">✓</span><span data-en="Equipment history & spare-parts tracking" data-fr="Suivi des équipements et des pièces de rechange">Equipment history & spare-parts tracking</span></li><li><span class="check">✓</span><span data-en="Intervention request management" data-fr="Gestion des demandes d'intervention">Intervention request management</span></li><li><span class="check">✓</span><span data-en="Maintenance analytics & reporting" data-fr="Analyse et reporting de la maintenance">Maintenance analytics & reporting</span></li></ul><a href="#" class="btn btn-outline solution-more" data-solution="t2" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
         <div class="tab-img"><div class="t3"><img src="assets/tab-cmms.jpg" alt="Intelligent CMMS Solution"/></div></div>
       </div>
       <div class="tab-panel" id="t3">
-        <div><h3 data-en="Intelligent Expatriate Management" data-fr="Gestion Intelligente des Expatriés">Intelligent Expatriate Management</h3><p data-en="Centralized, smart management of expatriates for efficient tracking and coordination." data-fr="Gestion centralisée et intelligente des expatriés pour un suivi et une coordination efficaces.">Centralized, smart management of expatriates for efficient tracking and coordination.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div><h3 data-en="Intelligent Expatriate Management" data-fr="Gestion Intelligente des Expatriés">Intelligent Expatriate Management</h3><p data-en="Centralized, smart management of expatriates for efficient tracking and coordination." data-fr="Gestion centralisée et intelligente des expatriés pour un suivi et une coordination efficaces.">Centralized, smart management of expatriates for efficient tracking and coordination.</p><ul class="about-list"><li><span class="check">✓</span><span data-en="Team & resource allocation across projects" data-fr="Gestion des équipes et affectation des ressources">Team & resource allocation across projects</span></li><li><span class="check">✓</span><span data-en="Time tracking, timesheets & workload planning" data-fr="Suivi des temps, feuilles d'heures et plan de charge">Time tracking, timesheets & workload planning</span></li><li><span class="check">✓</span><span data-en="Payroll and social contributions calculation" data-fr="Calcul de la paie et des charges sociales">Payroll and social contributions calculation</span></li><li><span class="check">✓</span><span data-en="Leave, absences and advances tracking" data-fr="Suivi des congés, absences et avances">Leave, absences and advances tracking</span></li></ul><a href="#" class="btn btn-outline solution-more" data-solution="t3" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
         <div class="tab-img"><div class="t3"><img src="assets/tab-expat.jpg" alt="Expatriate Management"/></div></div>
       </div>
       <div class="tab-panel" id="t4">
-        <div><h3 data-en="Invoice Management" data-fr="Gestion des Factures">Invoice Management</h3><p data-en="Automate, centralize and secure the entire invoicing cycle — from creation to archiving." data-fr="Automatisez, centralisez et sécurisez tout le cycle de facturation — de la création à l'archivage.">Automate, centralize and secure the entire invoicing cycle — from creation to archiving.</p><a href="#" class="btn btn-outline" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
+        <div><h3 data-en="Invoice Management" data-fr="Gestion des Factures">Invoice Management</h3><p data-en="Automate, centralize and secure the entire invoicing cycle — from creation to archiving." data-fr="Automatisez, centralisez et sécurisez tout le cycle de facturation — de la création à l'archivage.">Automate, centralize and secure the entire invoicing cycle — from creation to archiving.</p><ul class="about-list"><li><span class="check">✓</span><span data-en="Flexible, project-based invoicing" data-fr="Facturation flexible par projet">Flexible, project-based invoicing</span></li><li><span class="check">✓</span><span data-en="Attachments & work-completion tracking" data-fr="Suivi des attachements et métrés de travaux">Attachments & work-completion tracking</span></li><li><span class="check">✓</span><span data-en="Payment and outstanding balance follow-up" data-fr="Suivi des paiements et des soldes dus">Payment and outstanding balance follow-up</span></li><li><span class="check">✓</span><span data-en="Cost and revenue tracking per project" data-fr="Suivi des coûts et des revenus par projet">Cost and revenue tracking per project</span></li></ul><a href="#" class="btn btn-outline solution-more" data-solution="t4" style="margin-top:1.2rem;display:inline-flex" data-en="See More →" data-fr="En Savoir Plus →">See More →</a></div>
         <div class="tab-img"><div class="t3"><img src="assets/tab-invoice.jpg" alt="Invoice Management"/></div></div>
       </div>
     </div>
@@ -263,6 +335,9 @@
         <div class="why-item fade-in stagger"><div class="num">01</div><h3 data-en="BTP Industry Expertise" data-fr="Expertise du Secteur BTP">BTP Industry Expertise</h3><p data-en="Designed specifically for construction, public works and civil engineering companies." data-fr="Conçu spécifiquement pour les entreprises de construction, travaux publics et génie civil.">Designed specifically for construction, public works and civil engineering companies.</p></div>
         <div class="why-item fade-in stagger"><div class="num">02</div><h3 data-en="Real-Time Monitoring" data-fr="Suivi en Temps Réel">Real-Time Monitoring</h3><p data-en="Monitor your projects and teams anytime, anywhere, on a connected platform." data-fr="Suivez vos projets et équipes à tout moment, depuis n'importe où, sur une plateforme connectée.">Monitor your projects and teams anytime, anywhere, on a connected platform.</p></div>
         <div class="why-item fade-in stagger"><div class="num">03</div><h3 data-en="Cost Reduction" data-fr="Réduction des Coûts">Cost Reduction</h3><p data-en="Quickly identify unnecessary expenses, equipment breakdowns and delays to improve profitability." data-fr="Identifiez rapidement dépenses inutiles, pannes d'équipement et retards pour améliorer la rentabilité.">Quickly identify unnecessary expenses, equipment breakdowns and delays to improve profitability.</p></div>
+        <div class="why-item fade-in stagger"><div class="num">04</div><h3 data-en="Rapid Deployment" data-fr="Déploiement Rapide">Rapid Deployment</h3><p data-en="Simplified setup and customization tailored to your needs." data-fr="Mise en place simplifiée et personnalisation selon vos besoins.">Simplified setup and customization tailored to your needs.</p></div>
+        <div class="why-item fade-in stagger"><div class="num">05</div><h3 data-en="Automatic Updates" data-fr="Mises à Jour Automatiques">Automatic Updates</h3><p data-en="Get the latest features effortlessly, with no downtime." data-fr="Bénéficiez des dernières fonctionnalités sans effort, sans interruption.">Get the latest features effortlessly, with no downtime.</p></div>
+        <div class="why-item fade-in stagger"><div class="num">06</div><h3 data-en="Reliable Technical Support" data-fr="Support Technique Fiable">Reliable Technical Support</h3><p data-en="A dedicated expert team for fast, effective assistance." data-fr="Une équipe d'experts dédiée pour une assistance rapide et efficace.">A dedicated expert team for fast, effective assistance.</p></div>
       </div>
     </div>
   </div>
@@ -282,6 +357,28 @@
       <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-webdev.jpg" alt="Web Development"/><span class="ribbon">03</span></div><div class="card-body"><h3 data-en="Web Development" data-fr="Développement Web">Web Development</h3><p data-en="Corporate websites, eCommerce platforms and custom web applications built around your needs." data-fr="Sites vitrines, plateformes e-commerce et applications web sur mesure, conçus autour de vos besoins.">Corporate websites, eCommerce platforms and custom web applications built around your needs.</p></div></div>
       <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-powerplatform.jpg" alt="Microsoft Power Platform"/><span class="ribbon">04</span></div><div class="card-body"><h3 data-en="Microsoft Power Platform" data-fr="Microsoft Power Platform">Microsoft Power Platform</h3><p data-en="Build apps, automate workflows and analyze data to drive digital transformation." data-fr="Créez des applications, automatisez les workflows et analysez vos données pour piloter la transformation digitale.">Build apps, automate workflows and analyze data to drive digital transformation.</p></div></div>
       <div class="card fade-in stagger"><div class="card-thumb"><img src="assets/service-audit.jpg" alt="IT Systems Audit & Consulting"/><span class="ribbon">05</span></div><div class="card-body"><h3 data-en="IT Systems Audit &amp; Consulting" data-fr="Audit &amp; Conseil en Systèmes IT">IT Systems Audit &amp; Consulting</h3><p data-en="Expert assessment and support to keep your IT infrastructure secure and efficient." data-fr="Évaluation experte et accompagnement pour garder votre infrastructure IT sécurisée et performante.">Expert assessment and support to keep your IT infrastructure secure and efficient.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio / Réalisations — one .card link per finished project, each pointing
+     to its own standalone case-study page (e.g. bovi-gest/). Add more <a class="card">
+     entries here as new projects are ready to showcase. -->
+<section class="section" id="portfolio">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="eyebrow" data-en="Our Work" data-fr="Nos Réalisations">Our Work</div>
+      <h2 data-en="Real projects, real results" data-fr="Des projets concrets, des résultats concrets">Real projects, real results</h2>
+      <p data-en="A look at platforms we've built for clients — explore each case study in detail." data-fr="Un aperçu des plateformes que nous avons conçues pour nos clients — explorez chaque étude de cas en détail.">A look at platforms we've built for clients — explore each case study in detail.</p>
+    </div>
+    <div class="grid-3">
+      <a href="bovi-gest/index.html" class="card fade-in stagger" data-transition-label="BOVI-GEST">
+        <div class="card-thumb" style="background:linear-gradient(135deg,#2D7A4F,#E8A020);display:flex;align-items:center;justify-content:center;font-size:2.6rem">🐄<span class="ribbon">01</span></div>
+        <div class="card-body">
+          <h3 data-en="BOVI-GEST — Cattle Management Platform" data-fr="BOVI-GEST — Plateforme de Gestion Bovine">BOVI-GEST — Cattle Management Platform</h3>
+          <p data-en="A digital platform built on Microsoft Dynamics 365 Business Central to track herd health, breeding and farm profitability in real time." data-fr="Une plateforme digitale bâtie sur Microsoft Dynamics 365 Business Central pour suivre santé du troupeau, reproduction et rentabilité de la ferme en temps réel.">A digital platform built on Microsoft Dynamics 365 Business Central to track herd health, breeding and farm profitability in real time.</p>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -338,7 +435,7 @@
     </div>
     <div class="fade-in stagger">
       <h4 data-en="Solutions" data-fr="Solutions">Solutions</h4>
-      <ul><li><a href="#solutions" data-en="Construction ERP" data-fr="ERP Construction">Construction ERP</a></li><li><a href="#solutions" data-en="Maintenance" data-fr="Maintenance">Maintenance</a></li><li><a href="#solutions" data-en="Workforce" data-fr="Main-d'œuvre">Workforce</a></li><li><a href="#solutions" data-en="Invoicing" data-fr="Facturation">Invoicing</a></li></ul>
+      <ul><li><a href="#solutions" data-en="Construction GENYX-365" data-fr="GENYX-365 Construction">Construction GENYX-365</a></li><li><a href="#solutions" data-en="Maintenance" data-fr="Maintenance">Maintenance</a></li><li><a href="#solutions" data-en="Workforce" data-fr="Main-d'œuvre">Workforce</a></li><li><a href="#solutions" data-en="Invoicing" data-fr="Facturation">Invoicing</a></li></ul>
     </div>
     <div class="fade-in stagger">
       <h4 data-en="Contact" data-fr="Contact">Contact</h4>
