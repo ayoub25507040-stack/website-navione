@@ -152,12 +152,11 @@ header.site-header.scrolled .logo img{height:64px}
 .h-nav a:hover{opacity:1}
 .h-nav a:hover::after{width:100%}
 .header-actions{display:flex;align-items:center;gap:1.6rem}
-.lang-toggle{position:relative;display:flex;align-items:center;border:1px solid var(--border);border-radius:50px;padding:3px;background:rgba(255,255,255,.03);width:74px;height:34px}
+.lang-toggle{position:relative;display:flex;align-items:center;border:1px solid var(--border);border-radius:50px;padding:3px;background:rgba(255,255,255,.03);width:74px;height:34px;flex:0 0 auto}
 .lang-toggle .lt-opt{position:relative;z-index:2;flex:1;text-align:center;font-size:.72rem;font-weight:800;letter-spacing:.05em;color:var(--muted);transition:color .3s ease}
 .lang-toggle .lt-opt.active{color:#fff}
 .lang-toggle .lt-pill{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);border-radius:50px;background:linear-gradient(120deg,var(--accent),var(--accent-l));transition:transform .4s cubic-bezier(.65,0,.35,1);box-shadow:0 4px 14px rgba(59,78,255,.4)}
 .lang-toggle.fr .lt-pill{transform:translateX(100%)}
-@media (max-width:960px){.lang-toggle{display:none}}
 .menu-toggle{display:flex;align-items:center;gap:.9rem;z-index:1600;position:relative}
 .menu-toggle .label{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .menu-toggle .bars{display:flex;flex-direction:column;gap:5px;width:26px}
@@ -356,17 +355,27 @@ footer{background:rgba(7,8,14,.7);backdrop-filter:blur(20px);padding-top:5rem;bo
   .menu-toggle{display:none}
 }
 @media (max-width:960px){
-  .hero-grid,.about-grid{grid-template-columns:1fr}
+  .hero-inner,.about-grid,.why-wrap{grid-template-columns:1fr}
   .stats-strip .container{grid-template-columns:repeat(2,1fr)}
   .grid-3,.why-grid{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr}
   .tab-panel.active{grid-template-columns:1fr}
   .overlay-nav a{font-size:clamp(2rem,10vw,3.2rem)}
   .h-nav{display:none}
-  .header-actions .btn-primary{display:none}
+  .header-actions .btn-primary,.header-actions .contact-trigger{display:none}
+  .logo img{height:64px}
+  .section{padding:5.5rem 0}
+  .hero{padding:7.5rem 0 3.5rem}
+  .why-photo,.about-visual{height:300px}
+  .tab-panel .tab-img{height:220px}
 }
 @media (max-width:600px){
+  .container{padding:0 1.25rem}
   .grid-3,.why-grid{grid-template-columns:1fr}
-  .stats-strip .container{grid-template-columns:1fr 1fr}
+  .stats-strip .container{grid-template-columns:1fr 1fr;padding:2.6rem 1.25rem}
   .cta-band{margin:0 1rem;padding:3.2rem 1.6rem}
+  .footer-grid{grid-template-columns:1fr}
+  .section{padding:4rem 0}
+  .hero-bottom{align-items:flex-start}
+  .cm-card{padding:2.2rem 1.6rem}
 }
