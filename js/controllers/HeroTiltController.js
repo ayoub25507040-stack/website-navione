@@ -7,7 +7,6 @@ export function init() {
   const card = document.getElementById('hero3dCard');
   const shine = document.getElementById('hero3dShine');
   if (!stage || !card) return;
-  if (window.matchMedia('(max-width: 960px)').matches) return;
 
   const tilt = AppState.heroTilt;
 
